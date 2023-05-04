@@ -45,6 +45,8 @@ const signInWithGoogle = async () => {
 };
 
 const logInWithEmailAndPassword = async (email: string, password: string) => {
+  console.log(auth);
+
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
@@ -54,6 +56,8 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
 };
 
 const registerWithEmailAndPassword = async (name: string, email: string, password: string) => {
+  // debugger;
+  console.log(auth);
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
