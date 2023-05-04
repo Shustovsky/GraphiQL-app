@@ -18,7 +18,7 @@ function Login() {
     if (user) navigate('/');
   }, [user, loading, navigate]);
 
-  const loginAccount = (email: string, pass: string): Promise<void> => {
+  const loginAccount = (name: string, email: string, pass: string): Promise<void> => {
     return logInWithEmailAndPassword(email, pass);
   };
   return (

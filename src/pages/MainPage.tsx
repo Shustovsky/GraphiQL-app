@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db, logout } from './../firebase';
+import { auth, db } from './../firebase';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -16,13 +16,6 @@ export default function MainPage() {
   return (
     <div className="flex justify-between">
       <div>MainPage</div>
-      <span
-        data-tooltip="эта подсказка длиннее, чем элемент"
-        className="cursor-pointer"
-        onClick={logout}
-      >
-        {user?.email}
-      </span>
     </div>
   );
 }

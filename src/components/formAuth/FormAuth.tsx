@@ -4,7 +4,7 @@ interface IProps {
   title: string;
   titleBtn: string;
   isSignIn: boolean;
-  handlclick: (email: string, password: string, name: string) => Promise<void>;
+  handlclick: (name: string, email: string, password: string) => Promise<void>;
 }
 
 function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
@@ -27,7 +27,13 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form
+            className="space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handlclick(name, email, pass);
+            }}
+          >
             {!isSignIn && (
               <div>
                 <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
@@ -108,10 +114,6 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handlclick(name, email, pass);
-                }}
               >
                 {titleBtn}
               </button>
