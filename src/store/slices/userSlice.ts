@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -9,8 +8,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser({ isLogin }, action) {
-      isLogin = action.payload.isLogin;
+    setUser(state, action) {
+      const { isLogin } = action.payload;
+      state.isLogin = isLogin;
     },
   },
 });
