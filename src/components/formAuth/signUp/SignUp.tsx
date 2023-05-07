@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FormAuth from '../FormAuth';
 import { auth, registerWithEmailAndPassword } from './../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -13,7 +13,7 @@ function SignUp() {
     console.log(user);
     if (loading) return;
     if (user) navigate('/');
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   const registration = (name: string, email: string, pass: string): Promise<void> => {
     return registerWithEmailAndPassword(name, email, pass);
