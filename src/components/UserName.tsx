@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db, logout } from './../firebase';
 import { query, collection, getDocs, where } from 'firebase/firestore';
+import { Button } from './Button';
 function UserName() {
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState('');
-  //   const navigate = useNavigate();
 
   const fetchUserName = async () => {
     try {
@@ -20,21 +20,15 @@ function UserName() {
   };
 
   useEffect(() => {
-    fetchUserName();
+    user && fetchUserName();
   }, [user, loading]);
 
   return (
     <>
       {user && (
-        <div className="text-red-400">
-          <div className="dashboard__container">
-            Logged in as
-            <div className="text-blue-500">{name}</div>
-            <div>{user?.email}</div>
-            <button className="dashboard__btn" onClick={logout}>
-              Logout
-            </button>
-          </div>
+        <div className="flex gap-2 ">
+          <div className="text-blue-500 flex items-center">{name}</div>
+          <Button label="Logout" onClick={logout} />
         </div>
       )}
     </>

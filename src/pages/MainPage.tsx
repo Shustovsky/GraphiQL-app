@@ -10,7 +10,7 @@ export default function MainPage() {
   useEffect(() => {
     console.log(db);
     if (loading) return;
-    if (!user) navigate('/login');
+    if (!user) navigate('/welcome');
   }, [user, loading, navigate]);
 
   return (

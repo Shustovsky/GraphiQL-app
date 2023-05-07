@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 interface IProps {
   title: string;
@@ -8,9 +8,23 @@ interface IProps {
 }
 
 function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [name, setName] = useState('');
+  const {
+    handleSubmit,
+    reset,
+    watch,
+    register,
+    formState: { errors },
+  } = useForm({ mode: 'onBlur' });
+
+  const myForm = watch();
+  const name = myForm.name;
+  const email = myForm.email;
+  const pass = myForm.password;
+
+  const handleFormSubmit = () => {
+    handlclick(name, email, pass);
+    reset();
+  };
 
   return (
     <>
@@ -27,13 +41,7 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            className="space-y-6"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handlclick(name, email, pass);
-            }}
-          >
+          <form className="space-y-6" onSubmit={handleSubmit(handleFormSubmit)}>
             {!isSignIn && (
               <div>
                 <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
@@ -42,17 +50,24 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 <div className="mt-2">
                   <input
                     id="name"
-                    name="name"
                     type="text"
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                    placeholder="Your name"
+                    placeholder="Your first and last name"
                     autoComplete="name"
-                    required
                     className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    {...register('name', {
+                      required: 'Please enter your first and last name',
+                      pattern: {
+                        value: /^([A-Z/А-я]{1}[a-z/а-я]{1,30}\s[A-Z/А-я]{1}[a-z/а-я]{1,30})$/i,
+                        message:
+                          'Enter your first and last name with a capital letter. Minimum 2 characters, maximum 30 (Example: Jean Graham) ',
+                      },
+                    })}
                   />
+                  {errors?.name && (
+                    <p className="text-rose-600 text-xs mt-1">
+                      {errors?.name?.message?.toString() || 'Errors!'}
+                    </p>
+                  )}
                 </div>
               </div>
             )}
@@ -63,17 +78,23 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
                   placeholder="email"
                   autoComplete="email"
-                  required
                   className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  {...register('email', {
+                    required: 'Please enter valid email',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'invalid email address',
+                    },
+                  })}
                 />
+                {errors?.email && (
+                  <p className="text-rose-600 text-xs mt-1">
+                    {errors?.name?.message?.toString() || 'Errors!'}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -96,17 +117,27 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
                   type="password"
-                  value={pass}
-                  onChange={(e) => {
-                    setPass(e.target.value);
-                  }}
                   placeholder="password"
                   autoComplete="current-password"
-                  required
                   className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  {...register('password', {
+                    required: 'Please enter valid password',
+                    pattern: !isSignIn
+                      ? {
+                          value:
+                            /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,
+                          message:
+                            'Password requirements: 8-20 characters, 1 number, 1 letter, 1 symbol.',
+                        }
+                      : undefined,
+                  })}
                 />
+                {errors?.password && (
+                  <p className="text-rose-600 text-xs mt-1">
+                    {errors?.name?.message?.toString() || 'Errors!'}
+                  </p>
+                )}
               </div>
             </div>
 
