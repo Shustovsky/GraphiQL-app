@@ -1,6 +1,7 @@
 import logo from '../assets/icons/logo.png';
 import { useEffect, useState } from 'react';
 import { Button } from './Button';
+import UserName from './UserName';
 
 export function Header(): JSX.Element {
   const [isSticky, setIsSticky] = useState(false);
@@ -32,6 +33,7 @@ export function Header(): JSX.Element {
           /*TODO заглушка на кнопку*/
         }}
       />
+      <UserName />
     </header>
   );
 }
