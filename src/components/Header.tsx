@@ -2,9 +2,14 @@ import logo from '../assets/icons/logo.png';
 import { useEffect, useState } from 'react';
 import { Button } from './Button';
 import UserName from './UserName';
+import { useNavigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
 
 export function Header(): JSX.Element {
   const [isSticky, setIsSticky] = useState(false);
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,13 +31,22 @@ export function Header(): JSX.Element {
       }`}
     >
       <img className="w-10 h-10" src={logo} alt="logo" />
-
-      <Button
-        label="Sign up"
-        onClick={() => {
-          /*TODO заглушка на кнопку*/
-        }}
-      />
+      {!user && (
+        <div className="flex gap-1">
+          <Button
+            label="Sign up"
+            onClick={() => {
+              navigate('/register');
+            }}
+          />
+          <Button
+            label="Sign in"
+            onClick={() => {
+              navigate('/login');
+            }}
+          />
+        </div>
+      )}
       <UserName />
     </header>
   );

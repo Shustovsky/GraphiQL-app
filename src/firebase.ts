@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-import firebase from 'firebase/compat/app';
 import {
   GoogleAuthProvider,
   getAuth,
@@ -57,8 +56,8 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
 };
 
 const registerWithEmailAndPassword = async (name: string, email: string, password: string) => {
-  // debugger;
   console.log(auth);
+  console.log(name, email, password);
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;

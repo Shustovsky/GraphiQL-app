@@ -5,17 +5,20 @@ import MainPage from '../pages/MainPage';
 import NotFonundPage from '../pages/NotFoundPage';
 import RegisterPage from '../pages/RegisterPage';
 import WelcomePage from '../pages/WelcomePage';
+import Layout from '../components/layout/Layout';
 
 export default function Router() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route index element={<MainPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="welcome" element={<WelcomePage />} />
-        <Route path="*" element={<NotFonundPage />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route index element={<MainPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="welcome" element={<WelcomePage />} />
+          <Route path="*" element={<NotFonundPage />} />
+        </Routes>
+      </Layout>
     </BrowserRouter>
   );
 }
