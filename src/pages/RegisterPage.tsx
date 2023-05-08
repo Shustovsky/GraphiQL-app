@@ -10,7 +10,7 @@ export default function RegisterPage() {
       <p className="text-center">
         Already have an account?{' '}
         <Link className="text-red-700" to="/login">
-          Sign in
+          Sign in →
         </Link>
       </p>
     </>

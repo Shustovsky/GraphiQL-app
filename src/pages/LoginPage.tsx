@@ -7,9 +7,9 @@ export default function LoginPage() {
       <h2 className="text-blue-600 text-2xl ">LoginPage</h2>
       <Login />
       <p className="text-center">
-        Sign in or{' '}
-        <Link className="text-red-700" to="/register">
-          register
+        New to GraphQL?{' '}
+        <Link className="text-blue-500" to="/register">
+          Create an account.
         </Link>
       </p>
     </>
