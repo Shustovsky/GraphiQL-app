@@ -17,6 +17,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-hook-form": "^7.43.9",
     "react-redux": "^8.0.5",
+    "react-json-view-lite": "^0.9.5",
     "react-router-dom": "^6.11.0"
   },
   "devDependencies": {
