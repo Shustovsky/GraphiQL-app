@@ -6,8 +6,13 @@ import React, { useState } from 'react';
 import { JsonView, darkStyles } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
 import play from '../assets/icons/play.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '../components/loader/Loader';
+import { setLoading } from '../store/slices/loadingSlice';
 
 export default function MainPage() {
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.loading.isLoading);
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
   const [inputValue, setInputValue] = useState<string>('https://rickandmortyapi.com/graphql');
@@ -34,13 +39,19 @@ export default function MainPage() {
   };
 
   const makeRequest = (query): Promise<void> => {
+    dispatch(setLoading(true));
     return fetch(inputValue, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
       },
       body: JSON.stringify({ query }),
-    }).then((response) => response.json().then((data) => setResponseText(data)));
+    }).then((response) =>
+      response.json().then((data) => {
+        dispatch(setLoading(false));
+        setResponseText(data);
+      })
+    );
   };
 
   useEffect(() => {
@@ -75,7 +86,7 @@ export default function MainPage() {
           </button>
         </div>
         <div className="min-w-min grow h-auto border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm">
-          <JsonView data={responseText} style={darkStyles} />
+          {isLoading ? <Loader /> : <JsonView data={responseText} style={darkStyles} />}
         </div>
       </div>
     </main>
