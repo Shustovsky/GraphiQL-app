@@ -5,9 +5,12 @@ import { store } from './store';
 import { App } from './App';
 import './input.css';
 import './firebase';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
