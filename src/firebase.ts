@@ -11,12 +11,12 @@ import {
 import { getFirestore, query, getDocs, collection, where, addDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGIN_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: 'AIzaSyD-0Zyj1pc4Ic3CWtuwHIrzPTAiz7e0-Do',
+  authDomain: 'second-816e8.firebaseapp.com',
+  projectId: 'second-816e8',
+  storageBucket: 'second-816e8.appspot.com',
+  messagingSenderId: '781710633621',
+  appId: '1:781710633621:web:70c7578a93f6ad3dbf899c',
 };
 
 const app = initializeApp(firebaseConfig);

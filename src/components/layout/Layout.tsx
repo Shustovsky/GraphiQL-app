@@ -1,11 +1,8 @@
 import { Header } from '../Header';
 import { Footer } from '../Footer';
+import ChildrenProps from '../../models/children-props';
 
-interface IProps {
-  children: string | JSX.Element | JSX.Element[];
-}
-
-function Layout({ children }: IProps) {
+function Layout({ children }: ChildrenProps) {
   return (
     <>
       <Header />
