@@ -1,0 +1,23 @@
+{
+    "login_button": "Log In",
+    "sign-up_button": "Sign Up",
+
+    "login_title": "Sign in to your account",
+    "login-button_title": "Sign In",
+
+    "name": "Name",
+    "name_placeholder": "Your first and last name",
+    "name_error": "Please enter your first and last name",
+    "name_error_message": " 'Enter your first and last name with a capital letter. Minimum 2 characters, maximum 30 (Example: Jean Graham) '",
+
+    "email": "Email address",
+    "email_placeholder": "Your email address",
+    "email_error": "Please enter valid email",
+    "email_error_message": "invalid email address",
+
+    "password": "Email address",
+    "password_forgot": "Forgot password?",
+    "password_placeholder": "Your email address",
+    "password_error": "Please enter valid password",
+    "password_error_message": "Password requirements: 8-20 characters, 1 number, 1 letter, 1 symbol."
+}

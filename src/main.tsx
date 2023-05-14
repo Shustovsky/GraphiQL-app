@@ -5,6 +5,7 @@ import { store } from './store';
 import { App } from './App';
 import './input.css';
 import './firebase';
+import './i18n';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
