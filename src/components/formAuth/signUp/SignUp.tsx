@@ -10,7 +10,6 @@ function SignUp() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(user);
     if (loading) return;
     if (user) navigate('/');
   }, [user, loading, navigate]);
