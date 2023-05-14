@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   title: string;
@@ -15,6 +16,7 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
     register,
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
+  const { t } = useTranslation();
 
   const myForm = watch();
   const name = myForm.name;
@@ -25,6 +27,10 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
     handlclick(name, email, pass);
     reset();
   };
+
+  const nameError = t('name_error');
+  const emailError = t('email_error');
+  const passwordError = t('password_error');
 
   return (
     <>
@@ -45,21 +51,20 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
             {!isSignIn && (
               <div>
                 <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                  Name
+                  {t('name')}
                 </label>
                 <div className="mt-2">
                   <input
                     id="name"
                     type="text"
-                    placeholder="Your first and last name"
+                    placeholder={t('name_placeholder')}
                     autoComplete="name"
                     className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     {...register('name', {
-                      required: 'Please enter your first and last name',
+                      required: nameError,
                       pattern: {
                         value: /^([A-Z/А-я]{1}[a-z/а-я]{1,30}\s[A-Z/А-я]{1}[a-z/а-я]{1,30})$/i,
-                        message:
-                          'Enter your first and last name with a capital letter. Minimum 2 characters, maximum 30 (Example: Jean Graham) ',
+                        message: t('name_error_message'),
                       },
                     })}
                   />
@@ -73,20 +78,20 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
             )}
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Email address
+                {t('email')}
               </label>
               <div className="mt-2">
                 <input
                   id="email"
                   type="email"
-                  placeholder="email"
+                  placeholder={t('email_placeholder')}
                   autoComplete="email"
                   className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   {...register('email', {
-                    required: 'Please enter valid email',
+                    required: emailError,
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'invalid email address',
+                      message: t('email_error_message'),
                     },
                   })}
                 />
@@ -104,12 +109,12 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                  {t('password')}
                 </label>
                 {isSignIn && (
                   <div className="text-sm">
                     <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      Forgot password?
+                      {t('password_forgot')}
                     </a>
                   </div>
                 )}
@@ -118,17 +123,16 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 <input
                   id="password"
                   type="password"
-                  placeholder="password"
+                  placeholder={t('password_placeholder')}
                   autoComplete="current-password"
                   className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   {...register('password', {
-                    required: 'Please enter valid password',
+                    required: passwordError,
                     pattern: !isSignIn
                       ? {
                           value:
                             /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/,
-                          message:
-                            'Password requirements: 8-20 characters, 1 number, 1 letter, 1 symbol.',
+                          message: t('password_error_message'),
                         }
                       : undefined,
                   })}

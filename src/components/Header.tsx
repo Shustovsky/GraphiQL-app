@@ -5,11 +5,14 @@ import UserName from './UserName';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
+import { LangSwitcher } from './langSwitcher/LangSwitcher';
+import { useTranslation } from 'react-i18next';
 
 export function Header(): JSX.Element {
   const [isSticky, setIsSticky] = useState(false);
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,17 +37,18 @@ export function Header(): JSX.Element {
       {!user && (
         <div className="flex gap-1">
           <Button
-            label="Sign up"
+            label={t('sign-up_button')}
             onClick={() => {
               navigate('/register');
             }}
           />
           <Button
-            label="Sign in"
+            label={t('login_button')}
             onClick={() => {
               navigate('/login');
             }}
           />
+          <LangSwitcher />
         </div>
       )}
       <UserName />
