@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../../firebase';
+import { auth, db } from '../firebase';
 import React, { useState } from 'react';
 import { JsonView, darkStyles } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
-import play from '../../assets/icons/play.png';
+import play from '../assets/icons/play.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from '../../components/loader/Loader';
-import { setLoading } from '../../store/slices/loadingSlice';
+import { Loader } from '../components/loader/Loader';
+import { setLoading } from '../store/slices/loadingSlice';
 import { Schema } from './components/Schema';
 
 export default function MainPage() {
@@ -73,7 +73,7 @@ export default function MainPage() {
         onChange={changeInputHandler}
       />
 
-      <div className="flex flex-row flex-wrap">
+      <div className="main flex flex-row flex-wrap">
         <div className="w-auto">
           <textarea
             className="w-72 bg-[#002B36] h-96 resize border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
