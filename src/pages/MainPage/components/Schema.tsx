@@ -1,5 +1,5 @@
 import { getIntrospectionQuery, buildClientSchema, printSchema } from 'graphql';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface SchemaProps {
   apiUrl: string;
@@ -7,11 +7,8 @@ interface SchemaProps {
 
 export function Schema({ apiUrl }: SchemaProps) {
   const [print, setPrint] = useState('');
-  useEffect(() => {
-    fetchGraphQLSchema();
-  }, []);
 
-  async function fetchGraphQLSchema() {
+  const fetchGraphQLSchema = useCallback(async () => {
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
@@ -24,7 +21,15 @@ export function Schema({ apiUrl }: SchemaProps) {
     const schema = buildClientSchema(result.data);
     const print = printSchema(schema);
     setPrint(print);
-  }
+  }, [apiUrl]);
 
-  return <pre className="whitespace-pre-wrap">{print}</pre>;
+  useEffect(() => {
+    fetchGraphQLSchema();
+  }, [fetchGraphQLSchema]);
+
+  return (
+    <pre className="customScrollbar whitespace-pre-wrap absolute top-[7%] right-[50px] max-w-[80%] max-h-[80vh] bg-[#002B36] border-black border-8 p-3 rounded-md flex flex-row overflow-scroll gap-2">
+      {print}
+    </pre>
+  );
 }
