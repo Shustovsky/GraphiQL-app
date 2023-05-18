@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../firebase';
+import { auth, db } from '../../firebase';
 import React, { useState } from 'react';
 import { JsonView, darkStyles } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
-import play from '../assets/icons/play.png';
+import play from './../../assets/icons/play.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from '../components/loader/Loader';
-import { setLoading } from '../store/slices/loadingSlice';
+import { Loader } from '../../components/loader/Loader';
+import { setLoading } from '../../store/slices/loadingSlice';
 import { Schema } from './components/Schema';
+import { Docs } from './components/Docs';
 
 export default function MainPage() {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export default function MainPage() {
   };
 
   const makeRequest = (query): Promise<void> => {
-    dispatch(setLoading(true));
+    dispatch(setLoading(true, null));
     return fetch(inputValue, {
       method: 'POST',
       headers: {
@@ -51,7 +52,7 @@ export default function MainPage() {
       body: JSON.stringify({ query }),
     }).then((response) =>
       response.json().then((data) => {
-        dispatch(setLoading(false));
+        dispatch(setLoading(false, null));
         setResponseText(data);
       })
     );
@@ -63,7 +64,7 @@ export default function MainPage() {
   }, [user, loading, navigate]);
 
   return (
-    <main className="bg-[#002B36] text-white">
+    <main className="grow bg-[#002B36] text-white">
       <input
         className="bg-[#002B36] text-black placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
         placeholder="Search for anything..."
@@ -71,9 +72,10 @@ export default function MainPage() {
         name="search"
         value={inputValue}
         onChange={changeInputHandler}
+        disabled
       />
 
-      <div className="main flex flex-row flex-wrap">
+      <div className="flex flex-row flex-wrap">
         <div className="w-auto">
           <textarea
             className="w-72 bg-[#002B36] h-96 resize border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
@@ -94,18 +96,29 @@ export default function MainPage() {
       <div className="flex flex-row gap-1 fixed top-[30%] right-[-60px] rotate-90">
         <button
           className="px-4 py-2 font-semibold bg-sky-500 text-white hover:bg-green-500 transition-all duration-700"
-          onClick={() => setSchema((current) => !current)}
+          onClick={() => {
+            setSchema((current) => !current);
+            if (docs) {
+              setDocs((current) => !current);
+            }
+          }}
         >
           SCHEMA
         </button>
         <button
           className="px-4 py-2 font-semibold bg-sky-500 text-white hover:bg-green-500 transition-all duration-700"
-          onClick={() => setDocs((current) => !current)}
+          onClick={() => {
+            setDocs((current) => !current);
+            if (schema) {
+              setSchema((current) => !current);
+            }
+          }}
         >
           DOCS
         </button>
       </div>
       {schema && <Schema apiUrl={inputValue} />}
+      {docs && <Docs apiUrl={inputValue} />}
     </main>
   );
 }
