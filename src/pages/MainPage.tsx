@@ -28,7 +28,7 @@ export default function MainPage() {
       '}'
   );
   const [textAreaVariable, setTextAreaVariable] = useState<string>('');
-  const [responseText, setResponseText] = useState<string>(
+  const [responseText, setResponseText] = useState<string | Error>(
     'Press the Play Button to get a response here'
   );
 
@@ -44,43 +44,23 @@ export default function MainPage() {
     setTextAreaVariable(event.target.value);
   };
 
-  const makeRequest = (query): Promise<void> => {
-    dispatch(setLoading(true));
-    return fetch(inputValue, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ query }),
-    }).then((response) =>
-      response.json().then((data) => {
-        dispatch(setLoading(false));
-        setResponseText(data);
-      })
-    );
-  };
-
-  const makeRequestWithLibrary = (query) => {
+  const makeRequest = (query: string) => {
     const client = new GraphQLClient(inputValue);
-    console.log(client);
-
     const queryGQL = gql`
       ${query}
     `;
+    const variables = textAreaVariable ? JSON.parse(textAreaVariable) : null;
 
-    const variables = JSON.parse(textAreaVariable);
-
-    const requestHeaders = {
-      'Content-type': 'application/json',
-    };
-
-    // Overrides the clients headers with the passed values
-    const datac = client
-      .request(queryGQL, variables, requestHeaders)
-      .then((data) => console.log(data));
-    console.log(datac);
-
-    // setResponseText(data);
+    client
+      .request(queryGQL, variables)
+      .then((data) => {
+        console.log(data);
+        dispatch(setLoading(false));
+        setResponseText(JSON.stringify(data, undefined, 2));
+      })
+      .catch((error) => {
+        setResponseText(error as Error);
+      });
   };
 
   useEffect(() => {
@@ -92,7 +72,7 @@ export default function MainPage() {
   return (
     <main className="bg-[#002B36] text-white h-[85vh]">
       <input
-        className="bg-[#002B36] text-black placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+        className=" text-black placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
         placeholder="Search for anything..."
         type="text"
         name="search"
@@ -116,7 +96,7 @@ export default function MainPage() {
 
         <div className="w-full">
           <button
-            onClick={() => makeRequestWithLibrary(textAreaValue)}
+            onClick={() => makeRequest(textAreaValue)}
             className="absolute translate-x-[-50%] translate-y-[50%] w-[40px] h-[40px] border-black border-2 bg-sky-500 rounded-full hover:bg-green-500 transition-all duration-700"
           >
             <img className="mx-auto w-[20px] h-[20px]" src={play} alt="play" />
