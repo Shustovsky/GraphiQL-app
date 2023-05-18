@@ -27,7 +27,9 @@ export default function MainPage() {
       '  }\n' +
       '}'
   );
+  const [isVarArea, setIsVarArea] = useState<boolean>(true);
   const [textAreaVariable, setTextAreaVariable] = useState<string>('');
+  const [textAreaHTTP, setTextAreaHTTP] = useState<string>('');
   const [responseText, setResponseText] = useState<string | Error>(
     'Press the Play Button to get a response here'
   );
@@ -42,6 +44,13 @@ export default function MainPage() {
 
   const changeTextAreaVarHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextAreaVariable(event.target.value);
+  };
+  const changeTextAreaHTTPHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextAreaHTTP(event.target.value);
+  };
+
+  const visibleArea = () => {
+    return isVarArea ? 'block' : 'hidden';
   };
 
   const makeRequest = (query: string) => {
@@ -87,11 +96,39 @@ export default function MainPage() {
             value={textAreaValue}
             onChange={changeTextAreaHandler}
           ></textarea>
-          <textarea
-            className="w-72 bg-[#002B36] h-[35vh] resize border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-            value={textAreaVariable}
-            onChange={changeTextAreaVarHandler}
-          ></textarea>
+          <div className="flex flex-col relative">
+            <div className="flex gap-2">
+              <button
+                style={isVarArea ? { color: 'blue' } : { color: 'white' }}
+                onClick={() => {
+                  setIsVarArea(true);
+                  console.log(isVarArea);
+                }}
+              >
+                Query Variables
+              </button>
+              <button
+                style={!isVarArea ? { color: 'blue' } : { color: 'white' }}
+                onClick={() => {
+                  setIsVarArea(false);
+                  console.log(isVarArea);
+                }}
+              >
+                HTTP Headers{' '}
+              </button>
+            </div>
+            <textarea
+              className="z-10 absolute w-full top-8 bg-[#002B36] h-[30vh] resize border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+              style={isVarArea ? { visibility: 'visible' } : { visibility: 'hidden' }}
+              value={textAreaVariable}
+              onChange={changeTextAreaVarHandler}
+            ></textarea>
+            <textarea
+              className=" absolute top-8 w-full bg-[#002B36] h-[30vh] resize border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+              value={textAreaHTTP}
+              onChange={changeTextAreaHTTPHandler}
+            ></textarea>
+          </div>
         </div>
 
         <div className="w-full">
