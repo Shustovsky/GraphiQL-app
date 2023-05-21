@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import FormAuth from '../FormAuth';
-import { auth, logInWithEmailAndPassword } from './../../../firebase';
+import { auth, logInWithEmailAndPassword } from '../../../firebase';
 import { useTranslation } from 'react-i18next';
 
 function Login() {

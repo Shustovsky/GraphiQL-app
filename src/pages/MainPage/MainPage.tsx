@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import React, { useState } from 'react';
 import { JsonView, darkStyles } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
-import play from '../assets/icons/play.png';
+import play from './../../assets/icons/play.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from '../components/loader/Loader';
-import { setLoading } from '../store/slices/loadingSlice';
 import { GraphQLClient, gql } from 'graphql-request';
+import { Loader } from '../../components/loader/Loader';
+import { setLoading } from '../../store/slices/loadingSlice';
+import { Schema } from './components/Schema';
+import { Docs } from './components/Docs';
 
 export default function MainPage() {
   const dispatch = useDispatch();
@@ -33,6 +35,8 @@ export default function MainPage() {
   const [responseText, setResponseText] = useState<string | Error>(
     'Press the Play Button to get a response here'
   );
+  const [schema, setSchema] = useState<boolean>(false);
+  const [docs, setDocs] = useState<boolean>(false);
 
   const changeInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -83,6 +87,7 @@ export default function MainPage() {
         name="search"
         value={inputValue}
         onChange={changeInputHandler}
+        disabled
       />
 
       <div className="main flex flex-row">
@@ -137,6 +142,32 @@ export default function MainPage() {
           </div>
         </div>
       </div>
+      <div className="flex flex-row gap-1 fixed top-[30%] right-[-60px] rotate-90">
+        <button
+          className="px-4 py-2 font-semibold bg-sky-500 text-white hover:bg-green-500 transition-all duration-700"
+          onClick={() => {
+            setSchema((current) => !current);
+            if (docs) {
+              setDocs((current) => !current);
+            }
+          }}
+        >
+          SCHEMA
+        </button>
+        <button
+          className="px-4 py-2 font-semibold bg-sky-500 text-white hover:bg-green-500 transition-all duration-700"
+          onClick={() => {
+            setDocs((current) => !current);
+            if (schema) {
+              setSchema((current) => !current);
+            }
+          }}
+        >
+          DOCS
+        </button>
+      </div>
+      {schema && <Schema apiUrl={inputValue} />}
+      {docs && <Docs apiUrl={inputValue} />}
     </main>
   );
 }
