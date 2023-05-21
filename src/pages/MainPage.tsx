@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../firebase';
+import { auth } from '../firebase';
 import React, { useState } from 'react';
 import { JsonView, darkStyles } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
@@ -49,19 +49,16 @@ export default function MainPage() {
     setTextAreaHTTP(event.target.value);
   };
 
-  const visibleArea = () => {
-    return isVarArea ? 'block' : 'hidden';
-  };
-
   const makeRequest = (query: string) => {
     const client = new GraphQLClient(inputValue);
     const queryGQL = gql`
       ${query}
     `;
     const variables = textAreaVariable ? JSON.parse(textAreaVariable) : null;
+    const setHeaders = textAreaHTTP ? JSON.parse(textAreaHTTP) : null;
 
     client
-      .request(queryGQL, variables)
+      .request(queryGQL, variables, setHeaders)
       .then((data) => {
         console.log(data);
         dispatch(setLoading(false));
@@ -73,7 +70,6 @@ export default function MainPage() {
   };
 
   useEffect(() => {
-    console.log(db);
     if (loading) return;
     if (!user) navigate('/welcome');
   }, [user, loading, navigate]);
@@ -102,7 +98,6 @@ export default function MainPage() {
                 style={isVarArea ? { color: 'blue' } : { color: 'white' }}
                 onClick={() => {
                   setIsVarArea(true);
-                  console.log(isVarArea);
                 }}
               >
                 Query Variables
@@ -111,7 +106,6 @@ export default function MainPage() {
                 style={!isVarArea ? { color: 'blue' } : { color: 'white' }}
                 onClick={() => {
                   setIsVarArea(false);
-                  console.log(isVarArea);
                 }}
               >
                 HTTP Headers{' '}
