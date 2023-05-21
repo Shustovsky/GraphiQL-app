@@ -34,24 +34,26 @@ export function Header(): JSX.Element {
       }`}
     >
       <img className="w-10 h-10" src={logo} alt="logo" />
-      {!user && (
-        <div className="flex gap-1">
-          <Button
-            label={t('sign-up_button')}
-            onClick={() => {
-              navigate('/register');
-            }}
-          />
-          <Button
-            label={t('login_button')}
-            onClick={() => {
-              navigate('/login');
-            }}
-          />
-          <LangSwitcher />
-        </div>
-      )}
-      <UserName />
+      <div className="flex">
+        {!user && (
+          <div className="flex gap-1">
+            <Button
+              label={t('sign-up_button')}
+              onClick={() => {
+                navigate('/register');
+              }}
+            />
+            <Button
+              label={t('login_button')}
+              onClick={() => {
+                navigate('/login');
+              }}
+            />
+          </div>
+        )}
+        <UserName />
+        <LangSwitcher />
+      </div>
     </header>
   );
 }
