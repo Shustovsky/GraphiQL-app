@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase';
 import React, { useState } from 'react';
-// import { Resizable } from 're-resizable';
+import { Resizable } from 're-resizable';
 import { JsonView, darkStyles } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
 import play from './../../assets/icons/play.png';
@@ -39,8 +39,8 @@ export default function MainPage() {
   const [schema, setSchema] = useState<boolean>(false);
   const [docs, setDocs] = useState<boolean>(false);
 
-  const [sizeRequest, setSizeRequest] = useState({ width: 320, height: 300 });
-  const [sizeVariables, setSizeVariables] = useState({ width: 320, height: 300 });
+  const [sizeRequest, setSizeRequest] = useState({ width: '100%', height: '40vh' });
+  const [sizeVariables, setSizeVariables] = useState({ width: 320, height: 'calc(100vh-3.5rem)' });
 
   const changeInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -83,86 +83,109 @@ export default function MainPage() {
   }, [user, loading, navigate]);
 
   return (
-    <main className="bg-[#172b3a] text-[#9fa6ab] h-[85vh]">
+    <main className="bg-[#172b3a] text-[#9fa6ab] h-[calc(100vh-3.5rem)]">
       <input
-        className=" text-[#9fa6ab] bg-[#0f202d] placeholder:italic placeholder:text-slate-400 block h-8 w-[calc(100%-1.5rem)] border border-[#09141c] rounded pl-2 my-2 ml-3 mr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+        className=" text-[#9fa6ab] bg-[#0f202d] placeholder:italic placeholder:text-slate-400 block h-8 w-[calc(100%-1.5rem)] border border-[#09141c] rounded pl-2 my-3 ml-3 mr-3 shadow-sm focus:outline-none sm:text-sm"
         placeholder="Search for anything..."
         type="text"
         name="search"
         value={inputValue}
         onChange={changeInputHandler}
-        disabled
       />
 
-      <div className="main flex flex-row">
-        <div className="w-auto flex flex-col">
-          <textarea
-            className="w-full h-full bg-[#0f202d] resize border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-            value={textAreaValue}
-            onChange={changeTextAreaHandler}
-          >
-            {/* <Resizable
+      <div className="main h-[calc(100%-3rem)] flex flex-row">
+        <Resizable
+          size={{ width: sizeVariables.width, height: sizeVariables.height }}
+          enable={{
+            top: false,
+            right: true,
+            bottom: false,
+            left: false,
+            topRight: false,
+            bottomRight: false,
+            bottomLeft: false,
+            topLeft: false,
+          }}
+          maxWidth={'80vw'}
+          minWidth={'320'}
+          onResizeStop={(e, direction, ref, d) => {
+            setSizeVariables({
+              width: sizeVariables.width + d.width,
+              height: sizeVariables.height + d.height,
+            });
+          }}
+        >
+          <div className="leftBlock w-auto h-full flex flex-col">
+            <Resizable
               size={{ width: sizeRequest.width, height: sizeRequest.height }}
+              enable={{
+                top: false,
+                right: false,
+                bottom: true,
+                left: false,
+                topRight: false,
+                bottomRight: false,
+                bottomLeft: false,
+                topLeft: false,
+              }}
+              maxHeight={'80vh'}
               onResizeStop={(e, direction, ref, d) => {
                 setSizeRequest({
-                  width: sizeRequest.width + d.width,
+                  width: '100%',
                   height: sizeRequest.height + d.height,
                 });
               }}
-            ></Resizable> */}
-          </textarea>
-
-          {/* <Resizable
-            size={{ width: sizeVariables.width, height: sizeVariables.height }}
-            onResizeStop={(e, direction, ref, d) => {
-              setSizeVariables({
-                width: sizeVariables.width + d.width,
-                height: sizeVariables.height + d.height,
-              });
-            }}
-          > */}
-          <div className="flex flex-col relative">
-            <div className="flex gap-2">
-              <button
-                style={isVarArea ? { color: 'blue' } : { color: 'white' }}
-                onClick={() => {
-                  setIsVarArea(true);
-                }}
-              >
-                Query Variables
-              </button>
-              <button
-                style={!isVarArea ? { color: 'blue' } : { color: 'white' }}
-                onClick={() => {
-                  setIsVarArea(false);
-                }}
-              >
-                HTTP Headers{' '}
-              </button>
+            >
+              <textarea
+                className="request resize-none focus: outline-none w-[100%] h-full bg-[#0f202d] py-2 pl-9 pr-3 shadow-sm sm:text-sm"
+                value={textAreaValue}
+                onChange={changeTextAreaHandler}
+              ></textarea>
+            </Resizable>
+            <div className="flex flex-col h-full">
+              <div className="flex gap-4 absolute z-20 mt-2">
+                <button
+                  style={isVarArea ? { color: '#9da3a7' } : { color: '#555e66' }}
+                  onClick={() => {
+                    setIsVarArea(true);
+                  }}
+                >
+                  QUERY VARIABLES
+                </button>
+                <button
+                  style={!isVarArea ? { color: '#9da3a7' } : { color: '#555e66' }}
+                  onClick={() => {
+                    setIsVarArea(false);
+                  }}
+                >
+                  HTTP HEADERS{' '}
+                </button>
+              </div>
+              <div className="h-full relative">
+                <textarea
+                  className="z-10 absolute w-full h-full bg-[#0b1924] resize-none py-2 pl-9 pr-3 pt-9 shadow-sm focus:outline-none sm:text-sm"
+                  style={isVarArea ? { visibility: 'visible' } : { visibility: 'hidden' }}
+                  value={textAreaVariable}
+                  onChange={changeTextAreaVarHandler}
+                ></textarea>
+                <textarea
+                  className="z-1 absolute w-full h-full bg-[#0b1924] resize-none py-2 pl-9 pr-3 pt-9 shadow-sm focus:outline-none sm:text-sm"
+                  value={textAreaHTTP}
+                  onChange={changeTextAreaHTTPHandler}
+                ></textarea>
+              </div>
             </div>
-            <textarea
-              className="z-10 absolute w-full top-8 bg-[#0b1924] h-full resize border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-              style={isVarArea ? { visibility: 'visible' } : { visibility: 'hidden' }}
-              value={textAreaVariable}
-              onChange={changeTextAreaVarHandler}
-            ></textarea>
-            <textarea
-              className=" absolute top-8 w-full bg-[#0b1924] h-[30vh] resize border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-              value={textAreaHTTP}
-              onChange={changeTextAreaHTTPHandler}
-            ></textarea>
           </div>
-          {/* </Resizable> */}
-        </div>
+        </Resizable>
 
         <div className="w-full">
           <button
             onClick={() => makeRequest(textAreaValue)}
-            className="absolute translate-x-[-50%] translate-y-[50%] w-[40px] h-[40px] border-black border-2 bg-sky-500 rounded-full hover:bg-green-500 transition-all duration-700"
+            className="absolute translate-x-[-50%] translate-y-[50%] w-[50px] h-[50px] border-black border-2 bg-sky-500 rounded-full hover:bg-green-500 transition-all duration-700"
           >
-            <img className="mx-auto w-[20px] h-[20px]" src={play} alt="play" />
+            <img className="mx-auto pl-1 w-[20px] h-[20px]" src={play} alt="play" />
           </button>
-          <div className="min-w-min grow h-[85vh] overflow-auto border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm">
+          <div className="min-w-min grow h-[85vh] overflow-auto py-2 pl-9 pr-3 shadow-sm">
             {isLoading ? <Loader /> : <JsonView data={responseText} style={darkStyles} />}
           </div>
         </div>
