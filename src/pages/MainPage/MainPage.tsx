@@ -62,8 +62,10 @@ export default function MainPage() {
     const queryGQL = gql`
       ${query}
     `;
-    const variables = textAreaVariable ? JSON.parse(textAreaVariable) : null;
-    const setHeaders = textAreaHTTP ? JSON.parse(textAreaHTTP) : null;
+    const variables =
+      typeof JSON.parse(textAreaVariable) === 'object' ? JSON.parse(textAreaVariable) : null;
+    const setHeaders =
+      typeof JSON.parse(textAreaHTTP) === 'object' ? JSON.parse(textAreaHTTP) : null;
 
     client
       .request(queryGQL, variables, setHeaders)
