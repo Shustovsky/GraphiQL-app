@@ -57,15 +57,25 @@ export default function MainPage() {
     setTextAreaHTTP(event.target.value);
   };
 
+  const isJsonString = (str: string) => {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
+
   const makeRequest = (query: string) => {
     const client = new GraphQLClient(inputValue);
     const queryGQL = gql`
       ${query}
     `;
+
     const variables =
-      typeof JSON.parse(textAreaVariable) === 'object' ? JSON.parse(textAreaVariable) : null;
-    const setHeaders =
-      typeof JSON.parse(textAreaHTTP) === 'object' ? JSON.parse(textAreaHTTP) : null;
+      textAreaVariable && isJsonString(textAreaVariable) ? JSON.parse(textAreaVariable) : null;
+    const setHeaders = textAreaHTTP && isJsonString(textAreaHTTP) ? JSON.parse(textAreaHTTP) : null;
+    console.log(setHeaders);
 
     client
       .request(queryGQL, variables, setHeaders)
