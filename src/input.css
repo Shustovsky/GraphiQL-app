@@ -25,3 +25,7 @@
     border-radius: 10px;
     background-color: transparent;
 }
+
+.response > * {
+    background: none;
+}

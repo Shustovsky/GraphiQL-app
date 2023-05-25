@@ -17,7 +17,7 @@ export function Header(): JSX.Element {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setIsSticky(scrollTop > 50);
+      setIsSticky(scrollTop > 10);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -30,7 +30,7 @@ export function Header(): JSX.Element {
   return (
     <header
       className={`py-1 px-10 flex justify-between sticky top-0 transition-all duration-700 ${
-        isSticky ? 'h-12 ' : 'h-14 bg-black'
+        isSticky ? 'h-12 bg-[#0b1924]' : 'h-14 bg-black'
       }`}
     >
       <img className="w-10 h-10" src={logo} alt="logo" />

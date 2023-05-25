@@ -7,6 +7,7 @@ import { Resizable } from 're-resizable';
 import { JsonView, darkStyles } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
 import play from './../../assets/icons/play.png';
+import triangle from './../../assets/icons/triangle.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { GraphQLClient, gql } from 'graphql-request';
 import { Loader } from '../../components/loader/Loader';
@@ -39,8 +40,9 @@ export default function MainPage() {
   const [schema, setSchema] = useState<boolean>(false);
   const [docs, setDocs] = useState<boolean>(false);
 
-  const [sizeRequest, setSizeRequest] = useState({ width: '100%', height: '40vh' });
-  const [sizeVariables, setSizeVariables] = useState({ width: 320, height: 'calc(100vh-3.5rem)' });
+  const [sizeRequest, setSizeRequest] = useState({ width: '100%', height: '100%' });
+  const [sizeLeftBlock, setSizeLeftBlock] = useState({ width: '320px', height: '100%' });
+  const [isRaise, setIsRaise] = useState(false);
 
   const changeInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -105,9 +107,9 @@ export default function MainPage() {
         onChange={changeInputHandler}
       />
 
-      <div className="main h-[calc(100%-3rem)] flex flex-row">
+      <div className="contentRes h-[calc(100%-3rem)] flex flex-row">
         <Resizable
-          size={{ width: sizeVariables.width, height: sizeVariables.height }}
+          size={{ width: sizeLeftBlock.width, height: sizeLeftBlock.height }}
           enable={{
             top: false,
             right: true,
@@ -118,17 +120,18 @@ export default function MainPage() {
             bottomLeft: false,
             topLeft: false,
           }}
-          maxWidth={'80vw'}
-          minWidth={'320'}
+          maxWidth={'70vw'}
+          minWidth={'240px'}
           onResizeStop={(e, direction, ref, d) => {
-            setSizeVariables({
-              width: sizeVariables.width + d.width,
-              height: sizeVariables.height + d.height,
+            setSizeLeftBlock({
+              width: sizeLeftBlock.width + d.width,
+              height: sizeLeftBlock.height + d.height,
             });
           }}
         >
-          <div className="leftBlock w-auto h-full flex flex-col">
+          <div className="leftBlock w-auto h-full flex flex-col bg-[#0b1924]">
             <Resizable
+              className="h-full max-h-[calc(100%-3rem)]"
               size={{ width: sizeRequest.width, height: sizeRequest.height }}
               enable={{
                 top: false,
@@ -140,8 +143,8 @@ export default function MainPage() {
                 bottomLeft: false,
                 topLeft: false,
               }}
-              maxHeight={'80vh'}
               onResizeStop={(e, direction, ref, d) => {
+                setIsRaise(true);
                 setSizeRequest({
                   width: '100%',
                   height: sizeRequest.height + d.height,
@@ -154,34 +157,66 @@ export default function MainPage() {
                 onChange={changeTextAreaHandler}
               ></textarea>
             </Resizable>
-            <div className="flex flex-col h-full">
-              <div className="flex gap-4 absolute z-20 mt-2">
-                <button
-                  style={isVarArea ? { color: '#9da3a7' } : { color: '#555e66' }}
+            <div
+              className="flex flex-col"
+              style={!isRaise ? { height: '3rem' } : { height: '100%' }}
+            >
+              <div className="w-full flex absolute z-20 px-2 h-10 bg-[#0b1924]">
+                <div
+                  className="w-full flex gap-4"
                   onClick={() => {
-                    setIsVarArea(true);
+                    !isRaise &&
+                      setSizeRequest({
+                        width: '100%',
+                        height: '60%',
+                      });
+                    setIsRaise(true);
                   }}
                 >
-                  QUERY VARIABLES
-                </button>
-                <button
-                  style={!isVarArea ? { color: '#9da3a7' } : { color: '#555e66' }}
+                  <button
+                    style={isVarArea ? { color: '#9da3a7' } : { color: '#555e66' }}
+                    onClick={() => {
+                      setIsVarArea(true);
+                    }}
+                  >
+                    QUERY VARIABLES
+                  </button>
+                  <button
+                    style={!isVarArea ? { color: '#9da3a7' } : { color: '#555e66' }}
+                    onClick={() => {
+                      setIsVarArea(false);
+                    }}
+                  >
+                    HTTP HEADERS{' '}
+                  </button>
+                </div>
+                <img
+                  className={`w-[15px] h-[15px] ml-auto my-auto ${!isRaise ? 'rotate-180' : ''}`}
                   onClick={() => {
-                    setIsVarArea(false);
+                    setSizeRequest({
+                      width: '100%',
+                      height: '60%',
+                    });
+                    isRaise &&
+                      setSizeRequest({
+                        width: '100%',
+                        height: '100%',
+                      });
+                    setIsRaise(!isRaise);
                   }}
-                >
-                  HTTP HEADERS{' '}
-                </button>
+                  src={triangle}
+                  alt="triangle"
+                />
               </div>
               <div className="h-full relative">
                 <textarea
-                  className="z-10 absolute w-full h-full bg-[#0b1924] resize-none py-2 pl-9 pr-3 pt-9 shadow-sm focus:outline-none sm:text-sm"
+                  className="z-10 absolute w-full h-full bg-[#0b1924] resize-none py-2 pl-9 pr-3 pt-10 shadow-sm focus:outline-none sm:text-sm"
                   style={isVarArea ? { visibility: 'visible' } : { visibility: 'hidden' }}
                   value={textAreaVariable}
                   onChange={changeTextAreaVarHandler}
                 ></textarea>
                 <textarea
-                  className="z-1 absolute w-full h-full bg-[#0b1924] resize-none py-2 pl-9 pr-3 pt-9 shadow-sm focus:outline-none sm:text-sm"
+                  className="z-1 absolute w-full h-full bg-[#0b1924] resize-none py-2 pl-9 pr-3 pt-10 shadow-sm focus:outline-none sm:text-sm"
                   value={textAreaHTTP}
                   onChange={changeTextAreaHTTPHandler}
                 ></textarea>
@@ -197,7 +232,7 @@ export default function MainPage() {
           >
             <img className="mx-auto pl-1 w-[20px] h-[20px]" src={play} alt="play" />
           </button>
-          <div className="min-w-min grow h-[85vh] overflow-auto py-2 pl-9 pr-3 shadow-sm">
+          <div className="response min-w-min grow h-[85vh] overflow-auto py-2 pl-9 pr-3 shadow-sm">
             {isLoading ? <Loader /> : <JsonView data={responseText} style={darkStyles} />}
           </div>
         </div>
