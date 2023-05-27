@@ -97,7 +97,7 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 />
                 {errors?.email && (
                   <p className="text-rose-600 text-xs mt-1">
-                    {errors?.name?.message?.toString() || 'Errors!'}
+                    {errors?.email?.message?.toString() || 'Errors!'}
                   </p>
                 )}
               </div>
@@ -139,7 +139,7 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 />
                 {errors?.password && (
                   <p className="text-rose-600 text-xs mt-1">
-                    {errors?.name?.message?.toString() || 'Errors!'}
+                    {errors?.password?.message?.toString() || 'Errors!'}
                   </p>
                 )}
               </div>

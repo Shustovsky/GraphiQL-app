@@ -41,7 +41,10 @@ export default function MainPage() {
   const [docs, setDocs] = useState<boolean>(false);
 
   const [sizeRequest, setSizeRequest] = useState({ width: '100%', height: '100%' });
-  const [sizeLeftBlock, setSizeLeftBlock] = useState({ width: '320px', height: '100%' });
+  const [sizeLeftBlock, setSizeLeftBlock] = useState({
+    width: `${innerWidth < 768 && innerWidth > 640 ? '240px' : innerWidth < 640 ? '90%' : '320px'}`,
+    height: `${innerWidth < 640 ? '50%' : '100%'}`,
+  });
   const [isRaise, setIsRaise] = useState(false);
 
   const changeInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +100,7 @@ export default function MainPage() {
   }, [user, loading, navigate]);
 
   return (
-    <main className="bg-[#172b3a] text-[#9fa6ab] h-[calc(100vh-3.5rem)]">
+    <main className="bg-[#172b3a] text-[#9fa6ab] h-[100vh]  sm:h-[calc(100vh-3.5rem)]">
       <input
         className=" text-[#9fa6ab] bg-[#0f202d] placeholder:italic placeholder:text-slate-400 block h-8 w-[calc(100%-1.5rem)] border border-[#09141c] rounded pl-2 my-3 ml-3 mr-3 shadow-sm focus:outline-none sm:text-sm"
         placeholder="Search for anything..."
@@ -107,7 +110,7 @@ export default function MainPage() {
         onChange={changeInputHandler}
       />
 
-      <div className="contentRes h-[calc(100%-3rem)] flex flex-row">
+      <div className="contentRes sm:overflow-auto h-[calc(100%-3.5rem)] flex sm:flex-row flex-col">
         <Resizable
           size={{ width: sizeLeftBlock.width, height: sizeLeftBlock.height }}
           enable={{
@@ -120,7 +123,7 @@ export default function MainPage() {
             bottomLeft: false,
             topLeft: false,
           }}
-          maxWidth={'70vw'}
+          maxWidth={'80vw'}
           minWidth={'240px'}
           onResizeStop={(e, direction, ref, d) => {
             setSizeLeftBlock({
@@ -152,7 +155,7 @@ export default function MainPage() {
               }}
             >
               <textarea
-                className="request resize-none focus: outline-none w-[100%] h-full bg-[#0f202d] py-2 pl-9 pr-3 shadow-sm sm:text-sm"
+                className="request resize-none focus: outline-none w-[100%] h-full bg-[#0f202d] py-3 pl-9 pr-3 shadow-sm sm:text-sm"
                 value={textAreaValue}
                 onChange={changeTextAreaHandler}
               ></textarea>
@@ -210,13 +213,13 @@ export default function MainPage() {
               </div>
               <div className="h-full relative">
                 <textarea
-                  className="z-10 absolute w-full h-full bg-[#0b1924] resize-none py-2 pl-9 pr-3 pt-10 shadow-sm focus:outline-none sm:text-sm"
+                  className="z-10 absolute w-full h-full bg-[#0b1924] resize-none pb-3 pl-9 pr-3 pt-9 shadow-sm focus:outline-none sm:text-sm"
                   style={isVarArea ? { visibility: 'visible' } : { visibility: 'hidden' }}
                   value={textAreaVariable}
                   onChange={changeTextAreaVarHandler}
                 ></textarea>
                 <textarea
-                  className="z-1 absolute w-full h-full bg-[#0b1924] resize-none py-2 pl-9 pr-3 pt-10 shadow-sm focus:outline-none sm:text-sm"
+                  className="z-1 absolute w-full h-full bg-[#0b1924] resize-none pb-3 pl-9 pr-3 pt-9 shadow-sm focus:outline-none sm:text-sm"
                   value={textAreaHTTP}
                   onChange={changeTextAreaHTTPHandler}
                 ></textarea>
@@ -225,14 +228,14 @@ export default function MainPage() {
           </div>
         </Resizable>
 
-        <div className="w-full">
+        <div className="w-full h-1/2">
           <button
             onClick={() => makeRequest(textAreaValue)}
-            className="absolute translate-x-[-50%] translate-y-[50%] w-[50px] h-[50px] border-black border-2 bg-sky-500 rounded-full hover:bg-green-500 transition-all duration-700"
+            className="sm:absolute fixed top-[calc(30%+115px)] sm:top-auto right-0 sm:right-auto translate-x-[-0.7rem] sm:translate-x-[-50%] sm:translate-y-[50%] w-[40px] sm:w-[50px] h-[100px] sm:h-[50px] border-black sm:border-2 bg-sky-500 sm:rounded-full hover:bg-green-500 transition-all duration-700"
           >
             <img className="mx-auto pl-1 w-[20px] h-[20px]" src={play} alt="play" />
           </button>
-          <div className="response min-w-min grow h-[85vh] overflow-auto py-2 pl-9 pr-3 shadow-sm">
+          <div className="response grow h-full overflow-auto py-2 pl-9 pr-3 shadow-sm">
             {isLoading ? <Loader /> : <JsonView data={responseText} style={darkStyles} />}
           </div>
         </div>

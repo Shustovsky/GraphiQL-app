@@ -4,7 +4,7 @@ import { LinkWithImg } from './LinkWithImg';
 
 export function Footer() {
   return (
-    <footer className="text-[#002B36] h-14 relative z-50 flex flex-wrap gap-2 justify-around items-center  bg-gray-100 py-1">
+    <footer className="text-[#002B36] h-14 relative z-50 bottom-0 flex flex-wrap gap-2 justify-around items-center  bg-gray-100 py-1">
       ©2023
       <LinkWithImg title="A. Shustovsky" href="https://github.com/shustovsky/" src={github} />
       <LinkWithImg title="P. Sobchenko" href="https://github.com/pavel-sobchenko" src={github} />
