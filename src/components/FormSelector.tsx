@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 /* eslint-disable-next-line */
 export interface FormSelectProps {
@@ -9,7 +9,7 @@ export interface FormSelectProps {
   doValidate: boolean;
   labelText: string;
   errorText?: string;
-  onChangeCallback?: (e: unknown) => void;
+  onChangeCallback?: (e: string) => void;
   fieldClassVariant?: string;
   selectDataSource: SelectOption[];
 }

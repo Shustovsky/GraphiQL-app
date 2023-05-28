@@ -23,7 +23,10 @@ export function LangSwitcher(): JSX.Element {
   };
 
   return (
-    <div className="header__lang ml-2 flex items-center">
+    <div
+      className="header__lang ml-2
+     flex items-center"
+    >
       <img className="h-8" src={lang} alt="" />
       <form className="form ml-2">
         <div className="form__section">
