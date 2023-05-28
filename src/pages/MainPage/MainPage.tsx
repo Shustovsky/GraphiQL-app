@@ -15,7 +15,9 @@ import { Docs } from './components/Docs';
 
 export default function MainPage() {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.loading.isLoading);
+  const isLoading = useSelector(
+    (state: { loading: { isLoading: boolean } }) => state.loading.isLoading
+  );
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
   const [inputValue, setInputValue] = useState<string>('https://rickandmortyapi.com/graphql');
@@ -64,7 +66,6 @@ export default function MainPage() {
     client
       .request(queryGQL, variables, setHeaders)
       .then((data) => {
-        console.log(data);
         dispatch(setLoading(false));
         setResponseText(JSON.stringify(data, undefined, 2));
       })
@@ -87,7 +88,6 @@ export default function MainPage() {
         name="search"
         value={inputValue}
         onChange={changeInputHandler}
-        disabled
       />
 
       <div className="main flex flex-row">
