@@ -36,7 +36,7 @@ export default function MainPage() {
   const [isVarArea, setIsVarArea] = useState<boolean>(true);
   const [textAreaVariable, setTextAreaVariable] = useState<string>('');
   const [textAreaHTTP, setTextAreaHTTP] = useState<string>('');
-  const [responseText, setResponseText] = useState<string | Error>(t('response_text'));
+  const [responseText, setResponseText] = useState<string | Error>(`${t('response_text')}`);
   const [schema, setSchema] = useState<boolean>(false);
   const [docs, setDocs] = useState<boolean>(false);
 
