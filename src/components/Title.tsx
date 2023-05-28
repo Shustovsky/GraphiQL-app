@@ -1,12 +1,12 @@
 import { Typography } from '@mui/material';
 import React from 'react';
 
-interface Props {
+interface IProps {
   text: string;
   textAlign: string;
 }
 
-const Title = ({ text, textAlign }: Props) => {
+const Title = ({ text, textAlign }: IProps) => {
   return (
     <Typography
       variant="h4"

@@ -1,29 +1,32 @@
 import { useTranslation } from 'react-i18next';
 import lang from '../../assets/icons/lang.svg';
 import FormSelect from '../FormSelector';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 const languageList = [
   { optionValue: 'en', optionName: 'English' },
-  { optionValue: 'bl', optionName: 'Belorussian' },
+  { optionValue: 'bl', optionName: 'Беларуская' },
 ];
 interface Props {
   rowStart?: string;
 }
 
 export function LangSwitcher({ rowStart }: Props): JSX.Element {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(languageList[0].optionValue);
+
+  const onClickLanguageChange = useCallback(
+    (value: string) => {
+      setSelectedLanguage(value);
+      i18n.changeLanguage(value);
+    },
+    [i18n]
+  );
 
   useEffect(() => {
     const language = i18n.language;
     onClickLanguageChange(language);
-  }, []);
-
-  const onClickLanguageChange = (value: string) => {
-    setSelectedLanguage(value);
-    i18n.changeLanguage(value); //change the language
-  };
+  }, [i18n, onClickLanguageChange]);
 
   return (
     <div className={`header__lang ml-2 flex items-center justify-center row-start-${rowStart}`}>

@@ -31,10 +31,13 @@ function UserName({ rowStart }: Props) {
     <>
       {user && (
         <div className={`flex gap-2 row-start-${rowStart} justify-center`}>
-          <div className="text-blue-500 text-xl flex items-center">{name}</div>
+          <div className="text-blue-500 text-xl flex items-center drop-shadow-lg shadow-black">
+            {name}
+          </div>
         </div>
       )}
     </>
   );
 }
+
 export default UserName;

@@ -4,7 +4,7 @@ import { Button } from './Button';
 import UserName from './UserName';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, logout } from '../firebase';
+import { auth } from '../firebase';
 import { LangSwitcher } from './langSwitcher/LangSwitcher';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,24 +47,24 @@ export function Header(): JSX.Element {
         }`}
       >
         <div className="flex flex-col gap-2 my-auto">
-          <span className="text-center md:hidden block">Выбраць мову</span>
+          <span className="text-center md:hidden block">{t('select_lang')}</span>
           <LangSwitcher rowStart={'2'} />
         </div>
 
         {!user && (
-          <div className="flex flex-col gap-5 row-start-3 justify-center">
+          <div className="flex flex-col md:flex-row gap-5 row-start-3 justify-center">
             <Button
               label={t('sign-up_button')}
               onClick={() => {
                 navigate('/register');
-                dispatch(setMobileMenu(!isOpen));
+                isOpen && dispatch(setMobileMenu(false));
               }}
             />
             <Button
               label={t('login_button')}
               onClick={() => {
                 navigate('/login');
-                dispatch(setMobileMenu(!isOpen));
+                isOpen && dispatch(setMobileMenu(false));
               }}
             />
           </div>
@@ -72,8 +72,8 @@ export function Header(): JSX.Element {
         {user ? (
           <UserName rowStart={'1'} />
         ) : (
-          <span className="text-lg md:hidden block row-start-1 text-center my-auto">
-            Сардэчна запрашаем
+          <span className="text-xl text-blue-500 drop-shadow-lg shadow-black md:hidden block row-start-1 text-center my-auto">
+            {t('welcome_title_short')}
           </span>
         )}
         {user && (
@@ -81,10 +81,10 @@ export function Header(): JSX.Element {
             {' '}
             <Button
               rowStart={'3'}
-              label={t('logout_button')}
+              label={t('logout-button_title')}
               onClick={() => {
                 signOut(auth);
-                dispatch(setMobileMenu(!isOpen));
+                dispatch(setMobileMenu(false));
               }}
             />
           </div>
