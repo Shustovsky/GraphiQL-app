@@ -4,9 +4,12 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db, logout } from '../firebase';
 import { query, collection, getDocs, where } from 'firebase/firestore';
 import { Button } from './Button';
+import { useTranslation } from 'react-i18next';
+
 function UserName() {
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState('');
+  const { t } = useTranslation();
 
   const fetchUserName = async () => {
     try {
@@ -28,10 +31,11 @@ function UserName() {
       {user && (
         <div className="flex gap-2 ">
           <div className="text-blue-500 flex items-center">{name}</div>
-          <Button label="Logout" onClick={logout} />
+          <Button label={t('logout-button_title')} onClick={logout} />
         </div>
       )}
     </>
   );
 }
+
 export default UserName;

@@ -37,7 +37,7 @@ const WelcomePage = () => {
         px: 2,
       }}
     >
-      <CustomGridItem item xs={12} sm={8} md={6} component="section">
+      <CustomGridItem item xs={12} sm={8} md={6}>
         <Box
           component="article"
           sx={{

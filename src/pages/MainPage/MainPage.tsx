@@ -12,10 +12,14 @@ import { Loader } from '../../components/loader/Loader';
 import { setLoading } from '../../store/slices/loadingSlice';
 import { Schema } from './components/Schema';
 import { Docs } from './components/Docs';
+import { useTranslation } from 'react-i18next';
 
 export default function MainPage() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.loading.isLoading);
+  const isLoading = useSelector(
+    (state: { loading: { isLoading: boolean } }) => state.loading.isLoading
+  );
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
   const [inputValue, setInputValue] = useState<string>('https://rickandmortyapi.com/graphql');
@@ -32,9 +36,7 @@ export default function MainPage() {
   const [isVarArea, setIsVarArea] = useState<boolean>(true);
   const [textAreaVariable, setTextAreaVariable] = useState<string>('');
   const [textAreaHTTP, setTextAreaHTTP] = useState<string>('');
-  const [responseText, setResponseText] = useState<string | Error>(
-    'Press the Play Button to get a response here'
-  );
+  const [responseText, setResponseText] = useState<string | Error>(t('response_text'));
   const [schema, setSchema] = useState<boolean>(false);
   const [docs, setDocs] = useState<boolean>(false);
 
@@ -64,7 +66,6 @@ export default function MainPage() {
     client
       .request(queryGQL, variables, setHeaders)
       .then((data) => {
-        console.log(data);
         dispatch(setLoading(false));
         setResponseText(JSON.stringify(data, undefined, 2));
       })
@@ -87,7 +88,6 @@ export default function MainPage() {
         name="search"
         value={inputValue}
         onChange={changeInputHandler}
-        disabled
       />
 
       <div className="main flex flex-row">
@@ -105,7 +105,7 @@ export default function MainPage() {
                   setIsVarArea(true);
                 }}
               >
-                Query Variables
+                {t('query_variables')}
               </button>
               <button
                 style={!isVarArea ? { color: 'blue' } : { color: 'white' }}
@@ -113,7 +113,7 @@ export default function MainPage() {
                   setIsVarArea(false);
                 }}
               >
-                HTTP Headers{' '}
+                {t('http_headers')}
               </button>
             </div>
             <textarea
@@ -152,7 +152,7 @@ export default function MainPage() {
             }
           }}
         >
-          SCHEMA
+          {t('schema')}
         </button>
         <button
           className="px-4 py-2 font-semibold bg-sky-500 text-white hover:bg-green-500 transition-all duration-700"
@@ -163,7 +163,7 @@ export default function MainPage() {
             }
           }}
         >
-          DOCS
+          {t('docs')}
         </button>
       </div>
       {schema && <Schema apiUrl={inputValue} />}
