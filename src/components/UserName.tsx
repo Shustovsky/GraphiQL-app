@@ -1,10 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db, logout } from '../firebase';
+import { auth, db } from '../firebase';
 import { query, collection, getDocs, where } from 'firebase/firestore';
-import { Button } from './Button';
-function UserName() {
+
+interface Props {
+  startRow?: number;
+}
+
+function UserName({ startRow }: Props) {
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState('');
 
@@ -26,9 +30,8 @@ function UserName() {
   return (
     <>
       {user && (
-        <div className="flex gap-2 ">
+        <div className={`flex gap-2 row-start-${startRow} justify-center`}>
           <div className="text-blue-500 flex items-center">{name}</div>
-          <Button label="Logout" onClick={logout} />
         </div>
       )}
     </>

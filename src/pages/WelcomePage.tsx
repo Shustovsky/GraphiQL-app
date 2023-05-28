@@ -1,8 +1,11 @@
 import React from 'react';
-import { Box, Grid, styled, Typography } from '@mui/material';
+
 import Title from '../components/Title';
 import imgDetail from '../assets/graphql.png';
 import imgDetail2 from '../assets/scheme.png';
+import { Grid, styled, Typography, Box } from '@mui/material';
+import { BoxProps } from '@mui/material';
+import { useTheme } from '@mui/material';
 import { Button } from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';

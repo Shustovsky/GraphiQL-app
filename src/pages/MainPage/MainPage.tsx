@@ -14,10 +14,11 @@ import { Loader } from '../../components/loader/Loader';
 import { setLoading } from '../../store/slices/loadingSlice';
 import { Schema } from './components/Schema';
 import { Docs } from './components/Docs';
+import { RootState } from '../../store';
 
 export default function MainPage() {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.loading.isLoading);
+  const isLoading = useSelector((state) => (state as RootState).loading.isLoading);
   const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
   const [inputValue, setInputValue] = useState<string>('https://rickandmortyapi.com/graphql');
@@ -123,7 +124,7 @@ export default function MainPage() {
             bottomLeft: false,
             topLeft: false,
           }}
-          maxWidth={'80vw'}
+          maxWidth={'85vw'}
           minWidth={'240px'}
           onResizeStop={(e, direction, ref, d) => {
             setSizeLeftBlock({
@@ -213,13 +214,13 @@ export default function MainPage() {
               </div>
               <div className="h-full relative">
                 <textarea
-                  className="z-10 absolute w-full h-full bg-[#0b1924] resize-none pb-3 pl-9 pr-3 pt-9 shadow-sm focus:outline-none sm:text-sm"
+                  className="z-10 absolute w-full h-full bg-[#0b1924] resize-none pb-1 pl-9 pr-3 pt-12 shadow-sm focus:outline-none sm:text-sm"
                   style={isVarArea ? { visibility: 'visible' } : { visibility: 'hidden' }}
                   value={textAreaVariable}
                   onChange={changeTextAreaVarHandler}
                 ></textarea>
                 <textarea
-                  className="z-1 absolute w-full h-full bg-[#0b1924] resize-none pb-3 pl-9 pr-3 pt-9 shadow-sm focus:outline-none sm:text-sm"
+                  className="z-1 absolute w-full h-full bg-[#0b1924] resize-none pb-1 pl-9 pr-3 pt-12 shadow-sm focus:outline-none sm:text-sm"
                   value={textAreaHTTP}
                   onChange={changeTextAreaHTTPHandler}
                 ></textarea>
@@ -228,19 +229,19 @@ export default function MainPage() {
           </div>
         </Resizable>
 
-        <div className="w-full h-1/2">
+        <div className="w-full sm:h-auto h-1/2">
           <button
             onClick={() => makeRequest(textAreaValue)}
-            className="sm:absolute fixed top-[calc(30%+115px)] sm:top-auto right-0 sm:right-auto translate-x-[-0.7rem] sm:translate-x-[-50%] sm:translate-y-[50%] w-[40px] sm:w-[50px] h-[100px] sm:h-[50px] border-black sm:border-2 bg-sky-500 sm:rounded-full hover:bg-green-500 transition-all duration-700"
+            className="sm:absolute z-20 fixed top-[calc(30%+115px)] sm:top-auto right-0 sm:right-auto translate-x-[-0.7rem] sm:translate-x-[-50%] sm:translate-y-[50%] w-[40px] sm:w-[50px] h-[100px] sm:h-[50px] border-black sm:border-2 bg-sky-500 sm:rounded-full hover:bg-green-500 transition-all duration-700"
           >
             <img className="mx-auto pl-1 w-[20px] h-[20px]" src={play} alt="play" />
           </button>
-          <div className="response grow h-full overflow-auto py-2 pl-9 pr-3 shadow-sm">
+          <div className="response grow h-full overflow-auto pt-4 pb-2 pl-9 sm:pr-3 pr-14 shadow-sm">
             {isLoading ? <Loader /> : <JsonView data={responseText} style={darkStyles} />}
           </div>
         </div>
       </div>
-      <div className="flex flex-row gap-1 fixed top-[30%] right-[-60px] rotate-90">
+      <div className="flex flex-row gap-1 fixed z-20 top-[30%] right-[-60px] rotate-90">
         <button
           className="px-4 py-2 font-semibold bg-sky-500 text-white hover:bg-green-500 transition-all duration-700"
           onClick={() => {
