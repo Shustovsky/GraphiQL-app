@@ -232,7 +232,7 @@ export default function MainPage() {
         <div className="w-full sm:h-auto h-1/2">
           <button
             onClick={() => makeRequest(textAreaValue)}
-            className="sm:absolute z-20 fixed top-[calc(30%+115px)] sm:top-auto right-0 sm:right-auto translate-x-[-0.7rem] sm:translate-x-[-50%] sm:translate-y-[50%] w-[40px] sm:w-[50px] h-[100px] sm:h-[50px] border-black sm:border-2 bg-sky-500 sm:rounded-full hover:bg-green-500 transition-all duration-700"
+            className="sm:absolute z-20 fixed top-[calc(30%+116px)] sm:top-auto right-0 sm:right-auto translate-x-[-0.75rem] sm:translate-x-[-50%] sm:translate-y-[50%] w-[40px] sm:w-[50px] h-[100px] sm:h-[50px] border-black sm:border-2 bg-sky-500 sm:rounded-full hover:bg-green-500 transition-all duration-700"
           >
             <img className="mx-auto pl-1 w-[20px] h-[20px]" src={play} alt="play" />
           </button>
