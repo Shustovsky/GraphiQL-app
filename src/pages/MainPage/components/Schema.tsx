@@ -28,7 +28,7 @@ export function Schema({ apiUrl }: SchemaProps) {
   }, [fetchGraphQLSchema]);
 
   return (
-    <pre className="customScrollbar whitespace-pre-wrap absolute top-[7%] right-[50px] max-w-[80%] max-h-[80vh] bg-[#002B36] border-black border-8 p-3 rounded-md flex flex-row overflow-scroll gap-2">
+    <pre className="customScrollbar whitespace-pre-wrap absolute z-2 top-[7%] right-[50px] max-w-[80%] max-h-[80vh] bg-[#002B36] border-black border-8 p-3 rounded-md flex flex-row overflow-scroll gap-2 z-50">
       {print}
     </pre>
   );

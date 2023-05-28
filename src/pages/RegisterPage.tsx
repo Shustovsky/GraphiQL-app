@@ -7,7 +7,7 @@ export default function RegisterPage() {
   const { t } = useTranslation();
   return (
     <>
-      <h2 className="text-blue-600 text-2xl">{t('register_page')}</h2>
+      <h2 className="text-blue-600 text-2xl mx-auto">{t('register_page')}</h2>
       <SignUp />
       <p className="text-center">
         {t('have_account')}

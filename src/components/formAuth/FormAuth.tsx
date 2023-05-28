@@ -100,7 +100,7 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 />
                 {errors?.email && (
                   <p className="text-rose-600 text-xs mt-1">
-                    {errors?.name?.message?.toString() || 'Errors!'}
+                    {errors?.email?.message?.toString() || 'Errors!'}
                   </p>
                 )}
               </div>
@@ -114,13 +114,13 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 >
                   {t('password')}
                 </label>
-                {isSignIn && (
+                {/* {isSignIn && (
                   <div className="text-sm">
                     <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                       {t('password_forgot')}
                     </a>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="mt-2">
                 <input
@@ -142,7 +142,7 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 />
                 {errors?.password && (
                   <p className="text-rose-600 text-xs mt-1">
-                    {errors?.name?.message?.toString() || 'Errors!'}
+                    {errors?.password?.message?.toString() || 'Errors!'}
                   </p>
                 )}
               </div>

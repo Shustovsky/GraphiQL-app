@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db, logout } from '../firebase';
+import { auth, db } from '../firebase';
 import { query, collection, getDocs, where } from 'firebase/firestore';
-import { Button } from './Button';
-import { useTranslation } from 'react-i18next';
 
-function UserName() {
+interface Props {
+  rowStart?: string;
+}
+
+function UserName({ rowStart }: Props) {
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState('');
-  const { t } = useTranslation();
 
   const fetchUserName = async () => {
     try {
@@ -29,9 +30,10 @@ function UserName() {
   return (
     <>
       {user && (
-        <div className="flex gap-2 ">
-          <div className="text-blue-500 flex items-center">{name}</div>
-          <Button label={t('logout-button_title')} onClick={logout} />
+        <div className={`flex gap-2 row-start-${rowStart} justify-center`}>
+          <div className="text-blue-500 text-xl flex items-center drop-shadow-lg shadow-black">
+            {name}
+          </div>
         </div>
       )}
     </>

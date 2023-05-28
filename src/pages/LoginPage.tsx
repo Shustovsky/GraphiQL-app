@@ -7,7 +7,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <h2 className="text-blue-600 text-2xl ">{t('login_page')}</h2>
+      <h2 className="text-blue-600 text-2xl mx-auto">{t('login_page')}</h2>
       <Login />
       <p className="text-center">
         {t('new_graphql')}

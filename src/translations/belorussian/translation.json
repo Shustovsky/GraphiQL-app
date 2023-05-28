@@ -43,5 +43,7 @@
     "schema": "СХЕМА",
     "docs": "ДАКУМ",
     "query_variables": "Зменныя запыту",
-    "http_headers": "HTTP загалоўкі"
+    "http_headers": "HTTP загалоўкі",
+    "select_lang": " Выбраць мову",
+    "welcome_title_short": "Сардэчна запрашаем"
 }
