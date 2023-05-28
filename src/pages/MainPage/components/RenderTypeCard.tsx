@@ -11,6 +11,7 @@ export function RenderTypeCard({
   clickTypeDetails,
   clickArgsDetails,
 }: RenderTypeCardProps): JSX.Element {
+  // eslint-disable-next-line
   const getField = (item: any) => {
     const objectType = Object.prototype.toString.call(item.type);
     if (objectType === '[object GraphQLScalarType]') {
