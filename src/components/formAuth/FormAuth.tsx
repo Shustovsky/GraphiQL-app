@@ -29,8 +29,11 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
   };
 
   const nameError = t('name_error');
+  const namePlaceholder = t('name_placeholder');
   const emailError = t('email_error');
+  const emailPlaceholder = t('email_placeholder');
   const passwordError = t('password_error');
+  const passwordPlaceholder = t('password_placeholder');
 
   return (
     <>
@@ -57,7 +60,7 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                   <input
                     id="name"
                     type="text"
-                    placeholder={t('name_placeholder')}
+                    placeholder={namePlaceholder}
                     autoComplete="name"
                     className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     {...register('name', {
@@ -84,7 +87,7 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 <input
                   id="email"
                   type="email"
-                  placeholder={t('email_placeholder')}
+                  placeholder={emailPlaceholder}
                   autoComplete="email"
                   className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   {...register('email', {
@@ -123,7 +126,7 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 <input
                   id="password"
                   type="password"
-                  placeholder={t('password_placeholder')}
+                  placeholder={passwordPlaceholder}
                   autoComplete="current-password"
                   className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   {...register('password', {

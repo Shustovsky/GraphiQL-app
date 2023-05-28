@@ -9,7 +9,7 @@ export interface FormSelectProps {
   doValidate: boolean;
   labelText: string;
   errorText?: string;
-  onChangeCallback?: (e) => void;
+  onChangeCallback?: (e: unknown) => void;
   fieldClassVariant?: string;
   selectDataSource: SelectOption[];
 }
