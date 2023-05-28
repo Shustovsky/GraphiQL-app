@@ -6,6 +6,8 @@
     "login_title": "Sign in to your account",
     "login-button_title": "Sign In",
 
+    "logout-button_title": "Logout",
+
     "name": "Name",
     "name_placeholder": "Your first and last name",
     "name_error": "Please enter your first and last name",
@@ -35,6 +37,12 @@
     "welcome_message": "We are happy to welcome you here and give you access to our data through GraphQL API. Our server provides powerful data retrieval and processing capabilities requests, and also provides fast and reliable access to information.",
 
     "welcome_title_2": "Use the best tool!",
-    "welcome_message_2": "We hope you find our GraphQL server useful and easy to use. Thank you for choosing our platform for your data needs."
+    "welcome_message_2": "We hope you find our GraphQL server useful and easy to use. Thank you for choosing our platform for your data needs.",
+
+    "response_text": "Press the Play Button to get a response here",
+    "schema": "SCHEMA",
+    "docs": "DOCS",
+    "query_variables": "Query Variables",
+    "http_headers": "HTTP Headers"
 
 }
