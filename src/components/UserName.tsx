@@ -5,10 +5,10 @@ import { auth, db } from '../firebase';
 import { query, collection, getDocs, where } from 'firebase/firestore';
 
 interface Props {
-  startRow?: number;
+  rowStart?: string;
 }
 
-function UserName({ startRow }: Props) {
+function UserName({ rowStart }: Props) {
   const [user, loading] = useAuthState(auth);
   const [name, setName] = useState('');
 
@@ -30,8 +30,8 @@ function UserName({ startRow }: Props) {
   return (
     <>
       {user && (
-        <div className={`flex gap-2 row-start-${startRow} justify-center`}>
-          <div className="text-blue-500 flex items-center">{name}</div>
+        <div className={`flex gap-2 row-start-${rowStart} justify-center`}>
+          <div className="text-blue-500 text-xl flex items-center">{name}</div>
         </div>
       )}
     </>

@@ -42,13 +42,17 @@ export function Header(): JSX.Element {
       <img className="w-10 h-10" src={logo} alt="logo" />
 
       <div
-        className={`grid gap-2 grid-cols-1 justify-center md:flex-row md:justify-end md:bg-opacity-0 md:flex absolute md:right-10 right-0 top-0 md:top-12 z-[1221] md:h-auto h-[50vh] w-full bg-[#e8f0fe] transition-all duration-400 ${
+        className={`grid gap-2 md:p-0 px-20 py-12 grid-rows-3 grid-cols-1 justify-center md:flex-row md:justify-end md:bg-opacity-0 md:flex absolute md:right-10 right-0 top-0 md:top-12 z-[1221] md:h-auto h-[50vh] w-full bg-[#e8f0fe] transition-all duration-400 ${
           isOpen ? '' : '-translate-y-full'
         }`}
       >
-        <LangSwitcher startRow={2} />
+        <div className="flex flex-col gap-2 my-auto">
+          <span className="text-center md:hidden block">Выбраць мову</span>
+          <LangSwitcher rowStart={'2'} />
+        </div>
+
         {!user && (
-          <div className="flex gap-1 row-start-3 justify-center">
+          <div className="flex flex-col gap-5 row-start-3 justify-center">
             <Button
               label={t('sign-up_button')}
               onClick={() => {
@@ -66,19 +70,24 @@ export function Header(): JSX.Element {
           </div>
         )}
         {user ? (
-          <UserName startRow={1} />
+          <UserName rowStart={'1'} />
         ) : (
-          <span className="md:hidden block text-center my-auto">Сардэчна запрашаем</span>
+          <span className="text-lg md:hidden block row-start-1 text-center my-auto">
+            Сардэчна запрашаем
+          </span>
         )}
         {user && (
-          <Button
-            startRow={3}
-            label={t('logout_button')}
-            onClick={() => {
-              signOut(auth);
-              dispatch(setMobileMenu(!isOpen));
-            }}
-          />
+          <div className="h-1/2">
+            {' '}
+            <Button
+              rowStart={'3'}
+              label={t('logout_button')}
+              onClick={() => {
+                signOut(auth);
+                dispatch(setMobileMenu(!isOpen));
+              }}
+            />
+          </div>
         )}
       </div>
     </header>

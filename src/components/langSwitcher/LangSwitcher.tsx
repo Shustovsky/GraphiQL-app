@@ -8,10 +8,10 @@ const languageList = [
   { optionValue: 'bl', optionName: 'Belorussian' },
 ];
 interface Props {
-  startRow?: number;
+  rowStart?: string;
 }
 
-export function LangSwitcher({ startRow }: Props): JSX.Element {
+export function LangSwitcher({ rowStart }: Props): JSX.Element {
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(languageList[0].optionValue);
 
@@ -26,7 +26,7 @@ export function LangSwitcher({ startRow }: Props): JSX.Element {
   };
 
   return (
-    <div className={`header__lang ml-2 flex items-center justify-center row-start-${startRow}`}>
+    <div className={`header__lang ml-2 flex items-center justify-center row-start-${rowStart}`}>
       <img className="h-8" src={lang} alt="" />
       <form className="form ml-2">
         <div className="form__section">

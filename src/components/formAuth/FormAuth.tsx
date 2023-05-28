@@ -111,13 +111,13 @@ function FormAuth({ title, titleBtn, isSignIn, handlclick }: IProps) {
                 >
                   {t('password')}
                 </label>
-                {isSignIn && (
+                {/* {isSignIn && (
                   <div className="text-sm">
                     <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                       {t('password_forgot')}
                     </a>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="mt-2">
                 <input
