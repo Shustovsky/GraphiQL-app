@@ -165,7 +165,7 @@ export default function MainPage() {
               className="flex flex-col"
               style={!isRaise ? { height: '3rem' } : { height: '100%' }}
             >
-              <div className="w-full flex absolute z-20 px-2 h-10 bg-[#0b1924]">
+              <div className="w-full flex absolute z-20 px-2 h-12 bg-[#0b1924]">
                 <div
                   className="w-full flex gap-4"
                   onClick={() => {
@@ -214,13 +214,13 @@ export default function MainPage() {
               </div>
               <div className="h-full relative">
                 <textarea
-                  className="z-10 absolute w-full h-full bg-[#0b1924] resize-none pb-1 pl-9 pr-3 pt-12 shadow-sm focus:outline-none sm:text-sm"
+                  className="z-10 absolute w-full h-full bg-[#0b1924] resize-none pl-9 pr-3 pt-12 shadow-sm focus:outline-none sm:text-sm"
                   style={isVarArea ? { visibility: 'visible' } : { visibility: 'hidden' }}
                   value={textAreaVariable}
                   onChange={changeTextAreaVarHandler}
                 ></textarea>
                 <textarea
-                  className="z-1 absolute w-full h-full bg-[#0b1924] resize-none pb-1 pl-9 pr-3 pt-12 shadow-sm focus:outline-none sm:text-sm"
+                  className="z-1 absolute w-full h-full bg-[#0b1924] resize-none pl-9 pr-3 pt-12 shadow-sm focus:outline-none sm:text-sm"
                   value={textAreaHTTP}
                   onChange={changeTextAreaHTTPHandler}
                 ></textarea>
